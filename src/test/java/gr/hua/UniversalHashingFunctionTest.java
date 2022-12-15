@@ -8,9 +8,9 @@ class UniversalHashingFunctionTest {
 
 	@Test
 	void test() {
-		UniversalHashingFunction hashingFunction = new UniversalHashingFunction(4, 15);
+		UniversalHashingFunction hashingFunction = new UniversalHashingFunction(4, UniversalHashingFunction.DEFAULT_SEED);
 		
-		assertEquals(hashingFunction.hash(55), 12);
+		assertEquals(hashingFunction.hash(55), 7);
 		assertEquals(hashingFunction.hash(400), hashingFunction.hash(400));
 	}
 

@@ -4,9 +4,9 @@ import java.util.Random;
 
 public class UniversalHashingFunction {
 	
-	public static final int DEFAULT_INPUT_BITS = 32;
+	private static final int DEFAULT_INPUT_BITS = 32;
 	public static final int DEFAULT_SEED = 17;
-	public static final int EXCLUSIVE_UPPER_BOUND = 2; 
+	private static final int EXCLUSIVE_UPPER_BOUND = 2; 
 	private int arrayFunction[][];
 	private Random random;
 	private int b, u;
@@ -15,7 +15,7 @@ public class UniversalHashingFunction {
 		this.u = DEFAULT_INPUT_BITS;
 		this.b = b;
 		this.arrayFunction = new int[b][DEFAULT_INPUT_BITS];
-		this.random = new Random(DEFAULT_SEED);
+		this.random = new Random();
 		
 		for ( int i = 0 ; i < b ; i++ ) {
 			for ( int j = 0 ; j < u ; j++ ) {
@@ -63,26 +63,7 @@ public class UniversalHashingFunction {
 			ret = ret + (int)Math.pow(2, i) * result[i];
 		}
 		
-//		System.out.print("Input bits are: ");
-//		for(int i=31;i>=0;i--) {
-//			System.out.print(input_bits[i]+" ");
-//		}
-//		System.out.println("\nInput_bits[0] = "+input_bits[0]);
-//		System.out.print("Result bits are: ");
-//		for(int i=arrayFunction.length-1;i>=0;i--) {
-//			System.out.print(result[i]+" ");
-//		}
-//		System.out.println("\nResult[2] = "+result[2]);
 		return ret;
-	}
-	
-	public void printState() {
-		for (int i=0;i<arrayFunction.length;i++) {
-			for (int j=0;j<32;j++) {
-				System.out.print(arrayFunction[i][j]+" ");
-			}
-			System.out.println();
-		}
 	}
 	
 }
