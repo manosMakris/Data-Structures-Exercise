@@ -10,6 +10,14 @@
   </properties>
 
   <dependencies>
+  
+  	<!--library for random names, used in hashmap test-->
+    <dependency>
+    	<groupId>com.github.javafaker</groupId>
+    	<artifactId>javafaker</artifactId>
+    	<version>0.12</version>
+	</dependency>
+  
     <dependency>
       <groupId>org.slf4j</groupId>
       <artifactId>slf4j-api</artifactId>
@@ -111,7 +119,7 @@
                 <addDefaultImplementationEntries>true</addDefaultImplementationEntries>
                 <addClasspath>true</addClasspath>
                 <classpathPrefix>lib/</classpathPrefix>
-                <mainClass>gr.hua.App</mainClass>
+                <mainClass>gr.hua.AppTest</mainClass>
               </manifest>
             </archive>
           </configuration>

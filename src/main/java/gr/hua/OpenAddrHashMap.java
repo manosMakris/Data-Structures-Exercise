@@ -35,28 +35,50 @@ public class OpenAddrHashMap<K, V> implements Dictionary<K, V>{
 
 	@Override
 	public V remove(K key) {
-		rehashIfNeeded();
-		
-		if (!contains(key)) {
+		if (!this.contains(key)) {
 			throw new NoSuchElementException("The key "+key+" doesn't exist.");
 		}
+		rehashIfNeeded();
 		
-		int idx = keyToIdx(key);
-		V valueToReturn = array[idx].getValue();
-		array[idx] = null;
-		int j = (idx + 1) % array.length;
-		K keyHelper;
+		int cur = hashFunction.hash(key.hashCode());
+		V ret = null;
 		
-		while (array[j] != null) {
-			keyHelper = array[j].getKey();
-			if (hashFunction.hash(keyHelper.hashCode()) <= idx) {
-				swap(idx, j);
-			}
-			j = (j + 1) % array.length;
+		while(!array[cur].getKey().equals(key)) {
+			cur = (cur+1) % array.length;
 		}
-		
+		// delete the element if found
+		ret = array[cur].getValue();
+		array[cur] = null;
 		size--;
-		return valueToReturn;
+		
+		//fix the position of null if needed
+		int next = (cur+1) % array.length;
+		while(array[next] != null) {
+			int defIdx = hashFunction.hash(array[next].getKey().hashCode());
+			if(defIdx != next) {
+				Entry<K, V> temp = array[next];
+				array[next] = null;
+				size--;
+				insert(temp.getKey(), temp.getValue());
+				
+//				if(next < cur) {
+//					if(defIdx < cur) {
+//						array[cur] = array[next];
+//						array[next] = null;
+//						cur = next;
+//					}
+//				}
+//				else if((defIdx <= cur && next > defIdx) || (next < defIdx && defIdx > cur)) {
+//					array[cur] = array[next];
+//					array[next] = null;
+//					cur = next;
+//				}
+			}
+
+			next = (next+1) % array.length;
+		}
+
+		return ret;
 	}
 
 	@Override
@@ -103,7 +125,8 @@ public class OpenAddrHashMap<K, V> implements Dictionary<K, V>{
 	@Override
 	public void clear() {
 		this.size = 0;
-		array = (Entry<K, V>[]) new Object[INITIAL_CAPACITY];
+		array = (Entry<K, V>[]) Array.newInstance(EntryImpl.class, INITIAL_CAPACITY);
+		hashFunction = new UniversalHashingFunction(log2(INITIAL_CAPACITY));
 	}
 
 	@Override
@@ -210,33 +233,9 @@ public class OpenAddrHashMap<K, V> implements Dictionary<K, V>{
 		size++;
 	}
 	
-	private static int log2(int N)
-    {
- 
-        // calculate log2 N indirectly
-        // using log() method
+	private static int log2(int N) {
         int result = (int)(Math.log(N) / Math.log(2));
- 
         return result;
     }
-	
-	private int keyToIdx(K key) {
-		int hascode = key.hashCode();
-		int idx = hashFunction.hash(hascode);
-		
-		while (array[idx] != null) {
-			if (array[idx].getKey().equals(key)) {
-				return idx;
-			}
-			idx = (idx + 1) % array.length;
-		}
-		return -1;
-	}
-	
-	private void swap(int idx1, int idx2) {
-		Entry<K, V> temp = array[idx1];
-		array[idx1] = array[idx2];
-		array[idx2] = temp;
-	}
 	
 }

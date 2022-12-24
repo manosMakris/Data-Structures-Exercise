@@ -1,6 +1,6 @@
-gr\hua\App.class
 gr\hua\OpenAddrHashMap$HashMapIterator.class
 gr\hua\Dictionary.class
+gr\hua\AppTest.class
 gr\hua\OpenAddrHashMap.class
 gr\hua\Dictionary$Entry.class
 gr\hua\OpenAddrHashMap$EntryImpl.class
