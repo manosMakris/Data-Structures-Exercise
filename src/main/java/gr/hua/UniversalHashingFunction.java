@@ -7,7 +7,7 @@ import java.util.Random;
  * @author teo&manos
  * <p>This class is used for hashing.</p>
  * <p>It has 2 constructors. One for debugging purposes 
- * and one for the actuall implementation of the hashmap.
+ * and one for the actually implementation of the hashMap.
  * It also has a hash() method which is the main part of this class.</p>
  */
 public class UniversalHashingFunction {
@@ -29,7 +29,7 @@ public class UniversalHashingFunction {
 	// it's output to only 0 and 1.
 	private static final int EXCLUSIVE_UPPER_BOUND = 2; 
 	
-	// This arrayFunction is resposible for storing
+	// This arrayFunction is responsible for storing
 	// the array used for the hashing in the hash() method.
 	private int arrayFunction[][];
 	
@@ -37,7 +37,7 @@ public class UniversalHashingFunction {
 	
 	// We created these private fields so that the code
 	// becomes more readable. Explanation:
-	// b = arrayFunction.length, u = arrayFunction[i].lenght
+	// b = arrayFunction.length, u = arrayFunction[i].length
 	private int b, u;
 	
 	/** This constructor is filling the the arrayFunction with a different
