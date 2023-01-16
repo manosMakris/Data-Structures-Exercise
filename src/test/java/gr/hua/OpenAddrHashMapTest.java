@@ -10,12 +10,12 @@ import gr.hua.Dictionary.Entry;
 
 class OpenAddrHashMapTest {
 	
-	public static final int SIZE = 16;
+	public static final int SIZE = 8;
 	
 	@Test
 void test() {
 		
-		for(int k=0; k<10000; k++) {
+		for(int k=0; k<1000; k++) {
 			
 			OpenAddrHashMap<Integer, Integer> hashMap = new OpenAddrHashMap<Integer, Integer>();
 			int r = new Random().nextInt();

@@ -60,14 +60,13 @@ public class OpenAddrHashMap<K, V> implements Dictionary<K, V>{
 		
 		// get the position of the given key using the hashFunction.
 		int cur = hashFunction.hash(key.hashCode());
-		V ret = null;
 		
 		// locate the actual location starting from cur
 		while(!array[cur].getKey().equals(key)) {
 			cur = (cur+1) % array.length;
 		}
 		// store the value and delete the element, if found.
-		ret = array[cur].getValue();
+		V ret = array[cur].getValue();
 		array[cur] = null;
 		size--;
 		
@@ -75,36 +74,38 @@ public class OpenAddrHashMap<K, V> implements Dictionary<K, V>{
 		
 		// check the first element next to the deleted one
 		int next = (cur+1) % array.length;
-		// if it is null then stop the process.
+		
 		while(array[next] != null) {
-			// defIdx is the default index of the next element given by the hashFunction.
+			
 			int defIdx = hashFunction.hash(array[next].getKey().hashCode());
-			// if the defIdx of the next is not actually in the array[next] then relocate it and escalate the null value.
+			
 			if(defIdx != next) {
 				
-//////////// UNDER CONSIDERATION //////////////////////////				
 				Entry<K, V> temp = array[next];
-				array[next] = null;
-				size--;
-				insert(temp.getKey(), temp.getValue());
+                array[next] = null;
+                size--;
+                insert(temp.getKey(), temp.getValue());
 				
-//				if(next < cur) {
-//					if(defIdx < cur) {
+//				if(defIdx < next && next > cur) {
+//					if(defIdx <= cur) {
 //						array[cur] = array[next];
 //						array[next] = null;
 //						cur = next;
 //					}
 //				}
-//				else if((defIdx <= cur && next > defIdx) || (next < defIdx && defIdx > cur)) {
-//					array[cur] = array[next];
-//					array[next] = null;
-//					cur = next;
+//				else {
+//					if(defIdx >= cur) {
+//						array[cur] = array[next];
+//						array[next] = null;
+//						cur = next;
+//					}
 //				}
+				
+				
 			}
-//----------------------------------------------------------------------------------------------
-			// go to the next element but in a circle motion if the end is reached.
-			next = (next+1) % array.length;
+			next = (next + 1) % array.length;
 		}
+		
 		
 		// return the value of the deleted element.
 		return ret;
