@@ -78,34 +78,17 @@ public class OpenAddrHashMap<K, V> implements Dictionary<K, V>{
 		while(array[next] != null) {
 			
 			int defIdx = hashFunction.hash(array[next].getKey().hashCode());
+                
+            while(array[defIdx] != null) {
+            	defIdx = (defIdx + 1) % array.length; 
+            }
+            if(defIdx != next) {
+                array[defIdx] = array[next];
+                array[next] = null;	     
+            }       
 			
-			if(defIdx != next) {
-				
-				Entry<K, V> temp = array[next];
-                array[next] = null;
-                size--;
-                insert(temp.getKey(), temp.getValue());
-				
-//				if(defIdx < next && next > cur) {
-//					if(defIdx <= cur) {
-//						array[cur] = array[next];
-//						array[next] = null;
-//						cur = next;
-//					}
-//				}
-//				else {
-//					if(defIdx >= cur) {
-//						array[cur] = array[next];
-//						array[next] = null;
-//						cur = next;
-//					}
-//				}
-				
-				
-			}
 			next = (next + 1) % array.length;
-		}
-		
+		}		
 		
 		// return the value of the deleted element.
 		return ret;

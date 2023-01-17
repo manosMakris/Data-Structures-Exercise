@@ -19,8 +19,9 @@ class OpenAddrHashMapTest_2 {
 		for(int k=0; k<100; k++) {
 			OpenAddrHashMap<String, String> hashMap = new OpenAddrHashMap<>();
 			
-			int SIZE = new Random().nextInt(1, 121);
+			int SIZE = new Random().nextInt(1, 1001);
 			
+			// external class for random names generation
 			Faker randomNames = new Faker();
 	
 			ArrayList<String> fnames = new ArrayList<>();
